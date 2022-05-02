@@ -30,3 +30,6 @@ INSERT INTO images (url, username, title, description) VALUES (
     'That is the question.'
 );
 
+INSERT INTO images (url, username, title, description) VALUES (
+
+);

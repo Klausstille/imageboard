@@ -10,11 +10,16 @@ body {
 
 p {
     text-align: center;
+    color: #787878;
+}
+
+h3 {
+    text-align: center;
 }
 
 #logo {
-    background-color: red;
-    color: white;
+    /* background-color: black; */
+    color: black;
     text-align: center;
     padding: 15px;
     border-bottom: solid 1px;
@@ -31,13 +36,13 @@ input {
     box-sizing: border-box;
     border: solid 1px;
     margin-right: 10px;
-    width: 500px;
+    width: 200px;
 }
 
 .file {
     border: solid 1px black;
     border-radius: 30px;
-    padding: 12px 100px;
+    padding: 12px 60px;
     margin: 8px 0;
     position: relative;
     box-sizing: border-box;
@@ -52,7 +57,7 @@ input {
     padding: 0px;
     margin: 10px 0px;
     height: 40px;
-    width: 290px;
+    width: 200px;
     position: absolute;
     z-index: 1000;
     opacity: 0;
@@ -78,11 +83,11 @@ button {
     padding-bottom: 10px;
     padding: 10px;
     margin: 10px;
-    border: solid 1px;
+    /* border: solid 1px; */
 }
 
 section#imageboard {
-    margin-top: 20px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

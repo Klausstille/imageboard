@@ -4,6 +4,7 @@ const db = require("./sql/db");
 const multer = require("multer");
 const path = require("path");
 const uidSafe = require("uid-safe");
+const { upload } = require("./s3");
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -11,9 +12,9 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, callback) => {
         uidSafe(24).then((randomId) => {
-            callback(null, `${randomId}${path.extname(file.originalname)}`);
+            const fileName = `${randomId}${path.extname(file.originalname)}`;
+            callback(null, fileName);
         });
-        callback(null, "koala");
     },
 });
 
@@ -27,11 +28,30 @@ app.use(express.static("./public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.post("/image", uploader.single("image"), (req, res) => {
-    console.log("req.body", req.body);
-    console.log("req.file", req.file);
+app.post("/image", uploader.single("image"), upload, (req, res) => {
+    console.log("*****************");
+    console.log("POST /upload.json Route");
+    console.log("*****************");
+    console.log("file:", req.file);
+    console.log("input:", req.body);
+
+    const { username, title, description } = req.body;
+    const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
+    // console.log("DOES THIS GIVE ME THE CORRECT URL??", url);
+
     if (req.file) {
-        req.json({ success: true });
+        db.insertImage(url, username, title, description).then(
+            res.json({
+                url: url,
+                username: username,
+                title: title,
+                description: description,
+            })
+        );
+    } else {
+        res.json({
+            success: false,
+        });
     }
 });
 

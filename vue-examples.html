@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <main id="main">
+
+        <h1>
+            {{ title }}
+        </h1>
+
+    <!-- <form>
+        <input-field label="email" type="email"></input-field>
+        <input-field label="password" type="password"></input-field>
+        <switch-button text="click me"></switch-button>
+    </form> -->
+
+        <input-field label="title" type="text" @change="onTitleChange"></input-field>
+
+        <user-view v-for="id in listOfUsers" :id="id"></user-view>
+
+    </main>
+
+    <script src="vue-examples.js" type="module" crossorigin="use-credentials"></script>
+</body>
+</html>

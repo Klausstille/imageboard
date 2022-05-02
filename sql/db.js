@@ -19,4 +19,13 @@ function getAllData() {
     return db.query("SELECT * FROM images ORDER BY id DESC");
 }
 
-module.exports = { getAllData };
+function insertImage(url, username, title, description) {
+    const query = `INSERT INTO images (url, username, title, description)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *
+        `;
+    const params = [url, username, title, description];
+    return db.query(query, params).then((result) => result.rows[0]);
+}
+
+module.exports = { getAllData, insertImage };
