@@ -10,11 +10,12 @@ body {
 
 p {
     text-align: center;
-    color: #787878;
+    color: black;
 }
 
 h3 {
     text-align: center;
+    color: black;
 }
 
 #logo {
@@ -23,6 +24,39 @@ h3 {
     text-align: center;
     padding: 15px;
     border-bottom: solid 1px;
+}
+
+#module {
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(194 194 194 / 75%);
+    display: flex;
+    align-items: center;
+}
+
+.close {
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+}
+
+#content {
+    text-align: center;
+}
+
+#module img {
+    width: 40%;
+    border-radius: 0;
+    object-fit: cover;
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
 }
 
 form {
@@ -83,7 +117,7 @@ button {
     padding-bottom: 10px;
     padding: 10px;
     margin: 10px;
-    /* border: solid 1px; */
+    border: solid 1px;
 }
 
 section#imageboard {
@@ -91,13 +125,14 @@ section#imageboard {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: row;
 }
 
-#image-grid {
-    /* flex-direction: row; */
-}
+/* #image-grid {
+    flex-direction: row;
+} */
 
-#image-grid img {
+#imageboard img {
     height: 400px;
     width: 400px;
     object-fit: cover;

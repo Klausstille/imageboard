@@ -55,6 +55,38 @@ app.post("/image", uploader.single("image"), upload, (req, res) => {
     }
 });
 
+app.get("/comments/:id", (req, res) => {
+    const { id } = req.params;
+    db.getCommentsById(id).then((comments) => {
+        console.log("/comments:id", comments);
+        res.json(comments);
+    });
+});
+
+app.post("/comment", (req, res) => {
+    const { text, username, id } = req.params;
+    console.log("/comment", req.body);
+    db.createComment(id)
+        .then({
+            text: text,
+            username: username,
+        })
+        .then((createdcomment) => {
+            console.log("createdcomment inside the module:", createdcomment);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
+
+app.get("/image/:id", (req, res) => {
+    const { id } = req.params;
+    db.getImageById(id).then((image) => {
+        console.log("/image:id", image);
+        res.json(image);
+    });
+});
+
 app.get("/getimages", (req, res) => {
     db.getAllData().then((result) => {
         res.json(result.rows);
