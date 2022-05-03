@@ -35,12 +35,13 @@ function getImageById(id) {
 }
 
 function getCommentsById(id) {
+    console.log("getCommentsById");
     return db
-        .query("SELECT * FROM comments WHERE id = $1", [id])
+        .query("SELECT * FROM comments WHERE image_id = $1", [id])
         .then((result) => result.rows[0]);
 }
 
-function createComment({ text, username, image_id }) {
+function createComment(text, username, image_id) {
     const query = `INSERT INTO comments ( text, username, image_id)
         VALUES ($1, $2, $3)
         RETURNING *

@@ -11,11 +11,16 @@ CREATE TABLE images(
 );
 
 CREATE TABLE comments(
-    id SERIAL PRIMARY KEY,
     text VARCHAR NOT NULL,
     username VARCHAR NOT NULL,  
-    image_id   INTEGER NOT NULL UNIQUE REFERENCES images (id),
+    image_id   INTEGER NOT NULL REFERENCES images (id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO comments (text, username, image_id) VALUES (
+    'blablablablablablabla',
+    'funkychicken',
+    3
 );
 
 INSERT INTO images (url, username, title, description) VALUES (

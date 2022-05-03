@@ -57,32 +57,34 @@ app.post("/image", uploader.single("image"), upload, (req, res) => {
 
 app.get("/comments/:id", (req, res) => {
     const { id } = req.params;
-    db.getCommentsById(id).then((comments) => {
-        console.log("/comments:id", comments);
-        res.json(comments);
-    });
+    console.log("/SERVER!!!comments:id, username, comments", id);
+
+    db.getCommentsById(id)
+        .then((comments) => {
+            res.json(comments);
+            console.log("/comments:id", comments);
+        })
+        .catch((error) => {
+            console.log("error from SERVER SIDE while DB query", error);
+        });
 });
 
 app.post("/comment", (req, res) => {
-    const { text, username, id } = req.params;
+    const { text, username, image_id } = req.body;
     console.log("/comment", req.body);
-    db.createComment(id)
-        .then({
-            text: text,
-            username: username,
-        })
-        .then((createdcomment) => {
-            console.log("createdcomment inside the module:", createdcomment);
+    db.createComment(text, username, image_id)
+        .then((comment) => {
+            res.json(comment);
         })
         .catch((error) => {
-            console.log(error);
+            console.log("error in SERVER while DB insertion", error);
         });
 });
 
 app.get("/image/:id", (req, res) => {
     const { id } = req.params;
     db.getImageById(id).then((image) => {
-        console.log("/image:id", image);
+        // console.log("/image:id", image);
         res.json(image);
     });
 });
