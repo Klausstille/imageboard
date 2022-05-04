@@ -55,14 +55,26 @@ app.post("/image", uploader.single("image"), upload, (req, res) => {
     }
 });
 
+app.get("/more/:lowestId", (req, res) => {
+    const lastId = req.params.lowestId;
+    console.log("lastId in the SERRRVERJS", lastId);
+    db.getMoreImages(lastId)
+        .then((images) => {
+            res.json(images);
+            console.log("selected images in the then!!!", images);
+        })
+        .catch((error) => {
+            console.log("error in then in the SERRRVERJS", error);
+        });
+});
+
 app.get("/comments/:id", (req, res) => {
     const { id } = req.params;
-    console.log("/SERVER!!!comments:id, username, comments", id);
-
+    console.log("/SERVER!!!comments:id", id);
     db.getCommentsById(id)
         .then((comments) => {
-            res.json(comments);
             console.log("/comments:id", comments);
+            res.json(comments);
         })
         .catch((error) => {
             console.log("error from SERVER SIDE while DB query", error);

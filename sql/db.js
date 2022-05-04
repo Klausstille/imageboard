@@ -16,7 +16,7 @@ var dbUrl =
 const db = spicedPg(dbUrl);
 
 function getAllData() {
-    return db.query("SELECT * FROM images ORDER BY id DESC");
+    return db.query("SELECT * FROM images ORDER BY id DESC LIMIT 8");
 }
 
 function insertImage(url, username, title, description) {
@@ -38,7 +38,7 @@ function getCommentsById(id) {
     console.log("getCommentsById");
     return db
         .query("SELECT * FROM comments WHERE image_id = $1", [id])
-        .then((result) => result.rows[0]);
+        .then((result) => result.rows);
 }
 
 function createComment(text, username, image_id) {
@@ -50,7 +50,24 @@ function createComment(text, username, image_id) {
     return db.query(query, params).then((result) => result.rows[0]);
 }
 
+function getMoreImages(lastId) {
+    const query = `        
+        SELECT url, title, id, description, username, (
+        SELECT id FROM images
+        ORDER BY id ASC
+        LIMIT 1
+        ) AS "lowestId" FROM images
+        WHERE id < $1
+        ORDER BY id DESC
+        LIMIT 8;`;
+    const params = [lastId];
+    return db.query(query, params).then((result) => {
+        return result.rows;
+    });
+}
+
 module.exports = {
+    getMoreImages,
     createComment,
     getCommentsById,
     getImageById,

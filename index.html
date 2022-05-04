@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-    <div id="logo">
-        <h1>Latest Images</h1>
-    </div>
     <div id="main" v-cloak>
+    <div id="header">
+        <div id="logo">
+            <h1>Stille Studio</h1>
+        </div>
 
-    <my-component @close="onCloseClick" v-if="selectedImage" :selected-image="selectedImage"></my-component>
+    <my-component @update="onClick" @close="onCloseClick" v-if="selectedImage" :selected-image="selectedImage"></my-component>
 
         <form @submit="handleSubmit" method="post" action="/image" enctype="multipart/form-data">
             <input v-model="username" name="username" placeholder="Username">
@@ -21,15 +22,21 @@
             <label class="file">Choose a file</label>
             <button>Submit</button>
         </form>
-
+    </div>
             <section id="imageboard">
                         <div v-for="image in images" @click="onClick(image.id)" class="container">
-                            <img v-bind:src="image.url" id="image">
+                            <img v-bind:src="image.url" id="image" @mouseenter="mouseEnter" @mouseleave="mouseLeave" :class="getRandomShape()">
                                 <h3>{{image.title}}</h3><p>{{image.description}}</p>
-                </div>
+                        </div>
             </section>
-
+            <div id="loadmore">
+            <button @click="loadMore" :class="{ invisible: !seen }">Load More</button>
+            </div>
     </div>
-    <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
+<script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>    
+<script src="/js/script.js"></script>
+
 </body>
 </html>

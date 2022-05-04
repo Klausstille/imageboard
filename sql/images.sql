@@ -24,22 +24,22 @@ INSERT INTO comments (text, username, image_id) VALUES (
 );
 
 INSERT INTO images (url, username, title, description) VALUES (
-    'https://s3.amazonaws.com/imageboard/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg',
-    'funkychicken',
-    'Welcome to Spiced and the Future!',
-    'This photo brings back so many great memories.'
+    'https://s3.amazonaws.com/spicedling/6_LkppyF_hevRtJptyg4c4-K7WUrZAs9.png',
+    'Klaus',
+    'Pap',
+    'Oil Painting 20 x 30'
 );
 
 INSERT INTO images (url, username, title, description) VALUES (
-    'https://s3.amazonaws.com/imageboard/wg8d94G_HrWdq7bU_2wT6Y6F3zrX-kej.jpg',
-    'discoduck',
-    'Elvis',
-    'We can''t go on together with suspicious minds.'
+    'https://s3.amazonaws.com/spicedling/KbglU24ImwcrOlAxNgZXH6RsoajtccjQ.png',
+    'Klaus',
+    'Mom',
+    'Oil Painting 20 x 30'
 );
 
 INSERT INTO images (url, username, title, description) VALUES (
-    'https://s3.amazonaws.com/imageboard/XCv4AwJdm6QuzjenFPKJocpipRNNMwze.jpg',
-    'discoduck',
-    'To be or not to be',
-    'That is the question.'
+    'https://s3.amazonaws.com/spicedling/iA_0NgZf1oCkFOjnd4mpsVU7UT94Dg1v.png',
+    'Klaus',
+    'Self-Portrait',
+    'Oil Painting 40 x 30'
 );
