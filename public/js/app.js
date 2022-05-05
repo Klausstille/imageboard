@@ -1,4 +1,9 @@
 import * as Vue from "./vue.js";
+// import PulseSpinner from "./components/PulseSpinner.vue";
+// export function install(Vue) {
+//     Vue.component("pulse", PulseSpinner);
+// }
+// export { PulseSpinner };
 
 const commentModule = {
     props: ["selectedImage"],
@@ -18,7 +23,11 @@ const commentModule = {
         <button @click="submitPost" id="submitcomment">Submit</button>
      </div><br><h5>Total comments: {{comments.length}}</h5>
         <div v-for="comment in comments" id="comments">
-        <p>{{comment.username}}: {{comment.text}}</p>
+        <p class="text">{{ comment.text }}</p>
+        <p class="info">
+            <strong>{{ comment.username }}</strong>
+            on <time>{{ formatDate(comment.created_at) }}</time>
+        </p>
         </div>
     </div>
     `,
@@ -31,7 +40,7 @@ const commentModule = {
 
                 // this.text = response.text;
                 // this.username = response.username;
-                this.comments = response;
+                this.comments = response.reverse();
                 // console.log("APPPPJS:comments", this.username, this.text);
             })
             .catch((error) => {
@@ -39,6 +48,9 @@ const commentModule = {
             });
     },
     methods: {
+        formatDate(date) {
+            return new Date(date).toLocaleString();
+        },
         submitPost() {
             const data = JSON.stringify({
                 text: this.text,
@@ -55,9 +67,24 @@ const commentModule = {
             })
                 .then((res) => res.json())
                 .then((res) => {
-                    this.comments = [...this.comments, res];
+                    this.comments = [res, ...this.comments];
                     this.username = "";
                     this.text = "";
+                });
+        },
+    },
+    watch: {
+        selectedImage: function () {
+            fetch("/comments/" + this.selectedImage)
+                .then((resp) => {
+                    if (resp.status >= 400) {
+                        this.$emit("close");
+                        return {};
+                    }
+                    return resp.json();
+                })
+                .then((comment) => {
+                    this.comments = comment;
                 });
         },
     },
@@ -71,7 +98,6 @@ const myComponent = {
             title: "",
             description: "",
             username: "",
-            loaded: false,
             previous: "",
             next: "",
         };
@@ -86,8 +112,8 @@ const myComponent = {
             <h2>{{title}}</h2><p>{{description}}</p><h5>Uploaded by: {{username}}</h5><br>
             <comment-module v-if="selectedImage" :selected-image="selectedImage"></comment-module>
         </div>
-        <button class="next-previous" @click="nextImg" > → </button>
-        <button class="next-previous" @click="previousImg" > ← </button>
+        <button class="previous" @click="previousImg" v-if="previous"> < </button>
+        <button class="next" @click="nextImg" v-if="next"> > </button>
         <div @click="onCloseClick" id="closecontainer"></div>
     </div>
     `,
@@ -101,7 +127,6 @@ const myComponent = {
                 this.description = data.description;
                 this.title = data.title;
                 this.username = data.username;
-                this.loaded = true;
                 this.previous = data.previous;
                 this.next = data.next;
             });
@@ -126,7 +151,7 @@ const myComponent = {
     },
     watch: {
         selectedImage: function () {
-            fetch("/images/" + this.selectedImage)
+            fetch("/image/" + this.selectedImage)
                 .then((resp) => {
                     if (resp.status >= 400) {
                         this.$emit("close");
@@ -138,7 +163,6 @@ const myComponent = {
                     this.url = image.url;
                     this.username = image.username;
                     this.title = image.title;
-                    this.loaded = true;
                     this.previous = image.previous;
                     this.next = image.next;
                 });
@@ -153,6 +177,7 @@ const app = Vue.createApp({
     },
     data() {
         return {
+            // isLoading: true,
             images: [],
             title: "",
             description: "",
@@ -252,6 +277,14 @@ const app = Vue.createApp({
         getRandomShape() {
             const index = Math.floor(Math.random() * 7) + 1;
             return `shape-${index}`;
+        },
+        menu() {
+            var triggered = document.getElementById("form");
+            if (triggered.classList.contains("showmenu")) {
+                triggered.className = "";
+            } else {
+                triggered.classList.add("showmenu");
+            }
         },
     },
 });

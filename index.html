@@ -8,34 +8,41 @@
 <body>
     <div id="main" v-cloak>
     <div id="header">
-        <div id="logo">
-            <h1>Stille Studio</h1>
+        <div id="logo"><a href="/">
+            <h1>Stille Museum</h1></a>
+            <h1 id="menu" @click="menu">+</h1>
         </div>
 
     <my-component @update="onClick" @close="onCloseClick" v-if="selectedImage" :selected-image="selectedImage"></my-component>
 
-        <form @submit="handleSubmit" method="post" action="/image" enctype="multipart/form-data">
+        <form @submit="handleSubmit" method="post" action="/image" enctype="multipart/form-data" id="form">
             <input v-model="username" name="username" placeholder="Username">
             <input v-model="title" name="title" placeholder="Title">
             <input v-model="description" name="description" placeholder="Description">
             <input @change="handleFileChange" name="image" type="file" accept="image/*" class="hide_file">
             <label class="file">Choose a file</label>
-            <button>Submit</button>
+            <button >Submit</button>
         </form>
     </div>
+    
+    <!-- <circle-spin loading="isLoading"></circle-spin> -->
             <section id="imageboard">
                         <div v-for="image in images" @click="onClick(image.id)" class="container">
                             <img v-bind:src="image.url" id="image" @mouseenter="mouseEnter" @mouseleave="mouseLeave" :class="getRandomShape()">
-                                <h3>{{image.title}}</h3><p>{{image.description}}</p>
+                                <div id="descr">
+                                <h1>{{image.title}}</h1><h1>{{image.description}}</h1>
+                                </div>
                         </div>
             </section>
             <div id="loadmore">
             <button @click="loadMore" :class="{ invisible: !seen }">Load More</button>
             </div>
     </div>
+
 <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>    
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>   
+<!-- <script src="https://gist.github.com/pacifio/6e5591f728ff1509f2ceda176442a187.js"></script> -->
 <script src="/js/script.js"></script>
 
 </body>

@@ -21,6 +21,7 @@
         "multer": "^1.2.0",
         "nodemon": "^2.0.15",
         "spiced-pg": "^1.0.4",
-        "uid-safe": "^2.1.4"
+        "uid-safe": "^2.1.4",
+        "vue-spinners": "^1.0.2"
     }
 }
